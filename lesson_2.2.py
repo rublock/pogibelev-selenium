@@ -1,3 +1,4 @@
+import math
 import time
 from selenium.webdriver.support.ui import Select
 
@@ -21,6 +22,9 @@ try:
     select.select_by_value(str(res))
 
     browser.find_element(By.XPATH, "//button[text()='Submit']").click()
+
+    def calc(x):
+        return str(math.log(abs(12 * math.sin(int(x)))))
 
 finally:
     time.sleep(10)
