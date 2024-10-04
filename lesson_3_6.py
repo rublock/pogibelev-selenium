@@ -1,3 +1,4 @@
+import math
 import time
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -16,10 +17,26 @@ class TestMainPage1():
             login = (WebDriverWait(browser, 10).until(
                 EC.element_to_be_clickable((By.ID, "id_login_email"))
             ))
-            login.send_keys('e-mail')
+            login.send_keys('hypermail@yandex.ru')
 
-            browser.find_element(By.ID, "id_login_password").send_keys('password')
+            browser.find_element(By.ID, "id_login_password").send_keys('u4kgKSug3VLQq-q')
             browser.find_element(By.CLASS_NAME, "sign-form__btn").click()
+
+            answer = math.log(int(time.time()))
+
+            textarea = (WebDriverWait(browser, 10).until(
+                EC.element_to_be_clickable((By.CLASS_NAME, "ember-text-area"))
+            ))
+            textarea.clear()
+            textarea.send_keys(answer)
+
+            browser.find_element(By.CLASS_NAME, "submit-submission").click()
+
+            result_text = (WebDriverWait(browser, 10).until(
+                EC.visibility_of_element_located((By.CLASS_NAME, "smart-hints__hint"))
+            ))
+
+            print(result_text.text())
 
         except Exception as e:
             print(f"Произошла ошибка: {e}")
