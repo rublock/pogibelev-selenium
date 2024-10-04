@@ -2,8 +2,6 @@ import logging
 
 import pytest
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
 
 
 def pytest_addoption(parser):
@@ -17,7 +15,7 @@ def browser(request):
     browser = None
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
-        browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        browser = webdriver.Chrome()
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         browser = webdriver.Firefox()
