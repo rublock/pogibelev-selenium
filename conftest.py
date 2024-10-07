@@ -3,6 +3,8 @@ import logging
 import pytest
 from selenium import webdriver
 
+from lesson_3_6_test import TestMainPage1
+
 
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default='firefox',
