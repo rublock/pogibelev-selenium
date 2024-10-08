@@ -41,9 +41,7 @@ class TestMainPage1:
         result_text = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "smart-hints__hint"))
         )
-        print(result_text.text)
-        time.sleep(5)
-        browser.quit()
+        return result_text.text
 
 urls = [
     "https://stepik.org/lesson/236895/step/1",
@@ -53,4 +51,4 @@ urls = [
 @pytest.mark.parametrize("url", urls)
 def test_example(browser, url):
     test_instance = TestMainPage1()
-    test_instance.test_login_into_stepik(browser, url)
+    assert test_instance.test_login_into_stepik(browser, url) == 'Correct', 'not Correct! str'
