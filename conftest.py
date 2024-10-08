@@ -7,7 +7,7 @@ from lesson_3_6_test import TestMainPage1
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser_name', action='store', default='firefox',
+    parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: chrome or firefox")
 
 

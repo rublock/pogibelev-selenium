@@ -12,12 +12,24 @@ load_dotenv()
 stepik_login = os.environ.get("STEPIK_LOGIN")
 stepik_password = os.environ.get("STEPIK_PASSWORD")
 
+urls = [
+    'https://stepik.org/lesson/236895/step/1',
+    'https://stepik.org/lesson/236896/step/1',
+    'https://stepik.org/lesson/236897/step/1',
+    'https://stepik.org/lesson/236898/step/1',
+    'https://stepik.org/lesson/236899/step/1',
+    'https://stepik.org/lesson/236903/step/1',
+    'https://stepik.org/lesson/236904/step/1',
+    'https://stepik.org/lesson/236905/step/1',
+]
 
-class TestMainPage1:
+
+class TestMainPage1():
+
+    @pytest.mark.parametrize("url", urls)
     def test_login_into_stepik(self, browser, url):
         browser.implicitly_wait(10)
         browser.get(url)
-
         button_login_in = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "navbar__auth_login"))
         )
@@ -41,14 +53,8 @@ class TestMainPage1:
         result_text = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "smart-hints__hint"))
         )
-        return result_text.text
 
-urls = [
-    "https://stepik.org/lesson/236895/step/1",
-    "https://stepik.org/lesson/236896/step/1",
-]
+        assert result_text.text == 'Correct!', 'not Correct! str'
 
-@pytest.mark.parametrize("url", urls)
-def test_example(browser, url):
-    test_instance = TestMainPage1()
-    assert test_instance.test_login_into_stepik(browser, url) == 'Correct', 'not Correct! str'
+if __name__ == "__main__":
+    pytest.main()
