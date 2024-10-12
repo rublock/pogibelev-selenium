@@ -40,6 +40,13 @@ class TestMainPage1():
         browser.find_element(By.CLASS_NAME, "sign-form__btn").click()
 
         time.sleep(3)
+
+        button_again = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "again-btn"))
+        )
+        if button_again:
+            button_again.ckick()
+
         textarea_math = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "ember-text-area"))
         )
