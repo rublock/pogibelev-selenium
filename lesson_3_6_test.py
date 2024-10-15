@@ -12,24 +12,24 @@ load_dotenv()
 stepik_login = os.environ.get("STEPIK_LOGIN")
 stepik_password = os.environ.get("STEPIK_PASSWORD")
 
-urls = [
-    'https://stepik.org/lesson/236895/step/1',
-    'https://stepik.org/lesson/236896/step/1',
-    'https://stepik.org/lesson/236897/step/1',
-    'https://stepik.org/lesson/236898/step/1',
-    'https://stepik.org/lesson/236899/step/1',
-    'https://stepik.org/lesson/236903/step/1',
-    'https://stepik.org/lesson/236904/step/1',
-    'https://stepik.org/lesson/236905/step/1',
-]
 
-
-class TestMainPage1():
-
-    @pytest.mark.parametrize("url", urls)
-    def test_login_into_stepik(self, browser, url):
-        browser.implicitly_wait(10)
-        browser.get(url)
+class TestMainPage1:
+    @pytest.mark.parametrize(
+        "lesson",
+        [
+            "236895",
+            "236896",
+            "236897",
+            "236898",
+            "236899",
+            "236903",
+            "236904",
+            "236905",
+        ],
+    )
+    def test_login_into_stepik(self, browser, lesson):
+        lesson = f"https://stepik.org/lesson/{lesson}/step/1"
+        browser.get(lesson)
         button_login_in = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "navbar__auth_login"))
         )
@@ -39,13 +39,13 @@ class TestMainPage1():
         browser.find_element(By.ID, "id_login_password").send_keys(stepik_password)
         browser.find_element(By.CLASS_NAME, "sign-form__btn").click()
 
-        time.sleep(3)
-
         button_again = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "again-btn"))
         )
-        if button_again:
-            button_again.ckick()
+        if button_again.text == "Решить снова":
+            button_again.click()
+
+        time.sleep(3)
 
         textarea_math = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "ember-text-area"))
@@ -61,7 +61,8 @@ class TestMainPage1():
             EC.presence_of_element_located((By.CLASS_NAME, "smart-hints__hint"))
         )
 
-        assert result_text.text == 'Correct!', 'not Correct! str'
+        assert result_text.text == "Correct!", "not Correct! str"
+
 
 if __name__ == "__main__":
     pytest.main()
